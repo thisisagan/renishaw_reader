@@ -1,4 +1,3 @@
-# Some tiny functions for converting things
 from numpy import nan
 
 

@@ -1,13 +1,11 @@
-# Renishaw wdf Raman spectroscopy file reader
-# Code inspired by Henderson, Alex DOI:10.5281/zenodo.495477
 from __future__ import print_function
 import struct
 import numpy
 import io
-from renishawWiRE.types import LenType, DataType, MeasurementType
-from renishawWiRE.types import ScanType, UnitType, DataType
-from renishawWiRE.types import Offsets, ExifTags
-from renishawWiRE.utils import convert_wl, convert_attr_name
+from types import LenType, DataType, MeasurementType
+from types import ScanType, UnitType, DataType
+from types import Offsets, ExifTags
+from utils import convert_wl, convert_attr_name
 from sys import stderr
 try:
     import PIL
@@ -18,60 +16,6 @@ except ImportError:
 
 
 class WDFReader(object):
-    """Reader for Renishaw(TM) WiRE Raman spectroscopy files (.wdf format)
-
-    The wdf file format is separated into several DataBlocks, with starting 4-char 
-    strings such as (incomplete list):
-    `WDF1`: File header for information
-    `DATA`: Spectra data
-    `XLST`: Data for X-axis of data, usually the Raman shift or wavelength
-    `YLST`: Data for Y-axis of data, possibly not important
-    `WMAP`: Information for mapping, e.g. StreamLine or StreamLineHR mapping
-    `MAP `: Mapping information(?)
-    `ORGN`: Data for stage origin
-    `TEXT`: Annotation text etc
-    `WXDA`: ? TODO
-    `WXDM`: ? TODO
-    `ZLDC`: ? TODO
-    `BKXL`: ? TODO
-    `WXCS`: ? TODO
-    `WXIS`: ? TODO
-    `WHTL`: Whilte light image
-
-    Following the block name, there are two indicators:
-    Block uid: int32
-    Block size: int64
-
-    Args:
-    file_name (file) : File object for the wdf file
-
-    Attributes:
-    title (str) : Title of measurement
-    username (str) : Username
-    application_name (str) : Default WiRE
-    application_version (int,) * 4 : Version number, e.g. [4, 4, 0, 6602]
-    measurement_type (int) : Type of measurement
-                             0=unknown, 1=single, 2=multi, 3=mapping 
-    scan_type (int) : Scan of type, see values in scan_types
-    laser_wavenumber (float32) : Wavenumber in cm^-1
-    count (int) : Numbers of experiments (same type), can be smaller than capacity
-    spectral_units (int) : Unit of spectra, see unit_types
-    xlist_type (int) : See unit_types
-    xlist_unit (int) : See unit_types
-    xlist_length (int): Size for the xlist
-    xdata (numpy.array): x-axis data
-    ylist_type (int): Same as xlist_type
-    ylist_unit (int): Same as xlist_unit
-    ylist_length (int): Same as xlist_length
-    ydata (numpy.array): y-data, possibly not used
-    point_per_spectrum (int): Should be identical to xlist_length
-    data_origin_count (int) : Number of rows in data origin list
-    capacity (int) : Max number of spectra
-    accumulation_count (int) : Single or multiple measurements
-    block_info (dict) : Info block at least with following keys
-                        DATA, XLST, YLST, ORGN
-                        # TODO types?
-    """
 
     def __init__(self, file_name, debug=False):
         try:

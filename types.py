@@ -1,10 +1,3 @@
-################################################################################################
-# Declaration of DATA types            #                                                       #
-# Credits for the Gwyddion project for #                                                       #
-# deciphering the constants            #                                                       #
-# See https://sourceforge.net/p/gwyddion/code/HEAD/tree/trunk/gwyddion/modules/file/renishaw.c #
-################################################################################################
-
 from enum import IntEnum, Enum
 
 
